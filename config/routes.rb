@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  
+  device for :customers
+  
   # 顧客用
   get  "/signup", to: "public/registrations#new"
   post "/signup", to: "public/registrations#create"
