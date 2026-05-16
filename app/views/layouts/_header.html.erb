@@ -8,12 +8,10 @@
       <!-- メニュー -->
       <div>
         <%= link_to "About", about_path, class: "me-4 text-dark text-decoration-none d-inline-block border border-2 rounded p-2" %>
-        <a href="#" class="me-4 text-dark text-decoration-none d-inline-block border border-2 rounded p-2">
+        <a href="#" class="me-4 text-dark text-decoration-none d-inline-block border border-2 rounded p-2" >
           商品一覧
         </a>
-        <a href="#" class="me-4 text-dark text-decoration-none d-inline-block border border-2 rounded p-2">
-          新規登録
-        </a>
+        <%= link_to "新規登録", signup_path, class: "me-4 text-dark text-decoration-none d-inline-block border border-2 rounded p-2" %>
         <a href="#" class="text-dark text-decoration-none d-inline-block border border-2 rounded p-2">
           ログイン
         </a>
