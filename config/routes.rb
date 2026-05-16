@@ -2,8 +2,8 @@
 Rails.application.routes.draw do
 
   # 顧客用
-  get  "/signup", to: "public/registrations#new"
-  post "/signup", to: "public/registrations#create"
+  get  "customers/sign_up", to: "public/registrations#new"
+  post "customers/sign_up", to: "public/registrations#create"
 
 
   scope module: :public do
