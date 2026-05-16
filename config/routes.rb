@@ -1,7 +1,5 @@
 
 Rails.application.routes.draw do
-  
-  devise_for :customers
 
   # 顧客用
   get  "/signup", to: "public/registrations#new"
