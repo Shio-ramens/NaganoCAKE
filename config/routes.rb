@@ -5,13 +5,15 @@ Rails.application.routes.draw do
   get  "customers/sign_up", to: "public/registrations#new"
   post "customers/sign_up", to: "public/registrations#create"
 
+  get "customers/sign_in", to: "public/sessions#new"
+  post "customers/sign_in", to: "public/sessions#create"
+  delete "customers/sign_out",to: "public/sessions#destroy"
 
   scope module: :public do
     root to: "homes#top"
     get "about", to: "homes#about"
     get "customers/my_page", to: "customers#show"
     resource :customer, only: [:show, :edit, :update]
-    resource :session, only: [:new, :create, :destroy]
     resources :passwords, param: :token
   end
 

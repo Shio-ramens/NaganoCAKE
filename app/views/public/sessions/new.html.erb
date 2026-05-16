@@ -2,7 +2,7 @@
 
 <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
 
-<%= form_with url: session_path do |f| %>
+<%= form_with url: customers_sign_in_path do |f| %>
   <div>
     <%= f.label :email_address, "メールアドレス" %>
     <%= f.email_field :email_address, required: true, autofocus: true %>
