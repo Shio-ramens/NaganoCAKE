@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: "homes#top"
     get "about", to: "homes#about"
+    resource :customer, only: [:show, :edit, :update]
     resource :session, only: [:new, :create, :destroy]
     resources :passwords, param: :token
   end
