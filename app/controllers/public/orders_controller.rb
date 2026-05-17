@@ -6,16 +6,23 @@ class Public::OrdersController < Public::ApplicationController
   end
 
   def confirm
-    @order = Order.new
+    
+
+    @order = Order.new(order_params)
     @order.payment_method = order_params[:payment_method]
     
     # 2. ラジオボタンでどれが選ばれたかによって、@order に入れる住所を分岐させる準備
     #（※ここの中身は次回以降じっくり作るので、まずはエラーを消すためにガワだけ書きます）
-    case order_params[:address_option]
+    case params[:order][:select_address]
     when "0"
-      # ご自身の住所が選ばれたとき
+      @order.postal_code = "123-4567"
+      @order.address     = "長野県長野市ケーキ町1-1"
+      @order.name        = "ながの 太郎"
     when "1"
-      # 登録済住所が選ばれたとき
+      address = Address.find(params[:order][:address_id])
+      @order.postal_code = address.postal_code
+      @order.address     = address.address
+      @order.name        = address.name
     when "2"
       # 新しいお届け先が選ばれたとき
       @order.postal_code = order_params[:postal_code]
@@ -24,6 +31,8 @@ class Public::OrdersController < Public::ApplicationController
     end
 
     @cart_item = []
+
+    
   end
 
   def create
@@ -43,14 +52,14 @@ class Public::OrdersController < Public::ApplicationController
       postal_code: "150-0041",
     address: "東京都渋谷区神南1丁目19-11 パークウェースクエア2 4階",
     name: "山田花子",
-    payment_method: "銀行振込" # 一旦文字で置いておきます
+    payment_method: "transfer" # 一旦文字で置いておきます
     )
   end
 
   private
 
   def order_params
-   params.require(:order).permit(:payment_method, :postal_code, :address, :name, :address_option, :address_id)
+   params.require(:order).permit(:payment_method, :postal_code, :address, :name)
   end
 
 end
