@@ -1,5 +1,5 @@
 class Public::OrdersController < Public::ApplicationController
-  skip_before_action :require_authentication, only: [:new, :confirm]
+  skip_before_action :require_authentication, only: [:new, :confirm, :create, :thanks]
   def new
     @order = Order.new
     @addresses = []
@@ -27,9 +27,11 @@ class Public::OrdersController < Public::ApplicationController
   end
 
   def create
+    redirect_to thanks_orders_path
   end
 
   def thanks
+    
   end
 
   def index
