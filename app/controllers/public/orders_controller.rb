@@ -1,5 +1,5 @@
 class Public::OrdersController < Public::ApplicationController
-  skip_before_action :require_authentication, only: [:new, :confirm, :create, :thanks]
+  skip_before_action :require_authentication, only: [:new, :confirm, :create, :thanks, :index, :show]
   def new
     @order = Order.new
     @addresses = []
@@ -31,13 +31,20 @@ class Public::OrdersController < Public::ApplicationController
   end
 
   def thanks
-    
+
   end
 
   def index
+    @orders = []
   end
 
   def show
+    @order = Order.new(
+      postal_code: "150-0041",
+    address: "東京都渋谷区神南1丁目19-11 パークウェースクエア2 4階",
+    name: "山田花子",
+    payment_method: "銀行振込" # 一旦文字で置いておきます
+    )
   end
 
   private

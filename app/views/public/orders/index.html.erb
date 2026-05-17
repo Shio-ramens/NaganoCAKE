@@ -1,0 +1,72 @@
+<div class="container my-5">
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <h3 style="background-color: #e9ecef; display: inline-block; padding: 5px 15px; font-size: 20px;">注文履歴一覧</h3>
+    </div>
+  </div>
+
+  <table class="table table-bordered align-middle">
+    <thead>
+      <tr style="background-color: #eee;">
+        <th style="width: 12%;">注文日</th>
+        <th style="width: 40%;">配送先</th>
+        <th style="width: 25%;">注文商品</th>
+        <th style="width: 10%;">支払金額</th>
+        <th style="width: 10%;">ステータス</th>
+        <th style="width: 10%;">注文詳細</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2019/11/5</td>
+        <td>
+          〒1500041<br>
+          東京都渋谷区神南1丁目19-11 パークウェースクエア2 4階<br>
+          山田花子
+        </td>
+        <td>
+          いちごのショートケーキ<br>
+          ガトーショコ
+        </td>
+        <td>2,300円</td>
+        <td>入金確認</td>
+        <td class="text-center">
+          <%= link_to "表示する", order_path(1), class: "btn btn-primary btn-sm px-3 fw-bold" %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>2019/10/20</td>
+        <td>
+          〒2440812<br>
+          神奈川県横浜市戸塚区柏尾町3-9-10<br>
+          梅木匠
+        </td>
+        <td>チーズケーキ</td>
+        <td>550円</td>
+        <td>発送済み</td>
+        <td class="text-center">
+          <%= link_to "表示する", order_path(2), class: "btn btn-primary btn-sm px-3 fw-bold" %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>2019/9/8</td>
+        <td>
+          〒1500041<br>
+          東京都渋谷区神南1丁目19-11 パークウェースクエア2 4階<br>
+          山田花子
+        </td>
+        <td>
+          いちごのショートケーキ<br>
+          チーズケーキ
+        </td>
+        <td>3,200円</td>
+        <td>発送済み</td>
+        <td class="text-center">
+          <%= link_to "表示する", order_path(3), class: "btn btn-primary btn-sm px-3 fw-bold" %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
