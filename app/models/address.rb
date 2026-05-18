@@ -1,5 +1,5 @@
 class Address < ApplicationRecord
-  def addres_display
+  def address_display
     '〒' + postal_code + ' ' + name
   end
 end
