@@ -10,7 +10,7 @@ class Public::SessionsController < Public::ApplicationController
     customer = Customer.authenticate_by(params.permit(:email_address, :password))
     if customer && customer.is_active
       start_new_session_for customer
-      redirect_to customer_path(current_customer)
+      redirect_to customers_my_page_path
     else
       redirect_to customers_sign_in_path, alert: "メールアドレスまたはパスワードが正しくありません"
     end
