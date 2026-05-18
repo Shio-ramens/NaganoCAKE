@@ -1,0 +1,26 @@
+<div class="container py-5 text-center">
+
+  <h3 class="mb-5">
+    本当に退会しますか？
+  </h3>
+
+  <h5 class="mb-5">
+    退会すると、会員情報や<br>
+    購入履歴が閲覧できなくなります。<br>
+    退会する場合は、「退会する」をクリックしてください
+  </h5>
+
+  <div class="d-flex justify-content-center gap-4">
+    <%= link_to "退会しない",
+    customer_path(@customer),
+    class: "btn btn-primary px-4" %>
+
+    <%= link_to "退会する",
+    customers_withdraw_path,
+    data: { turbo_method: :patch },
+    class: "btn btn-danger px-4" %>
+  </div>
+
+  <div style="height: 200px;"></div>
+
+</div>

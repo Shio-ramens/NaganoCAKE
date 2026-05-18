@@ -7,9 +7,10 @@ class Public::SessionsController < Public::ApplicationController
   end
 
   def create
-    if customer = Customer.authenticate_by(params.permit(:email_address, :password))
+    customer = Customer.authenticate_by(params.permit(:email_address, :password))
+    if customer && customer.is_active
       start_new_session_for customer
-      redirect_to customers_my_page_path
+      redirect_to customer_path(current_customer)
     else
       redirect_to customers_sign_in_path, alert: "メールアドレスまたはパスワードが正しくありません"
     end
@@ -18,5 +19,16 @@ class Public::SessionsController < Public::ApplicationController
   def destroy
     terminate_session
     redirect_to customers_sign_in_path
+  end
+
+  private
+
+  def customer_state
+    customer = Customer.find_by(email_address: params[:email_address])
+    return if customer.nil?
+    return unless customer.authenticate(params[:password])
+    unless customer.is_active
+      redirect_to customers_sign_up_path
+    end
   end
 end
