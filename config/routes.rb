@@ -1,5 +1,8 @@
 
 Rails.application.routes.draw do
+  namespace :public do
+    get "addresses/index"
+  end
 
   # 顧客用
   get  "customers/sign_up", to: "public/registrations#new"
