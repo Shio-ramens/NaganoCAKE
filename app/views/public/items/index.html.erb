@@ -1,0 +1,8 @@
+<h2>商品一覧</h2>
+
+<% @items.each do |item| %>
+  <div>
+    <%= link_to item.name, item_path(item) %>
+    <%= item.price %>円
+  </div>
+<% end %>
