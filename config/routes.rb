@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: "homes#top"
     get "about", to: "homes#about"
+
+    get "customers/unsubscribe", to: "customers#unsubscribe"
+    patch "customers/withdraw", to: "customers#withdraw"
+
     resources :customers, only: [:show, :edit, :update]
     resources :passwords, param: :token
     resources :orders, only: [:new, :index, :show, :create] do
