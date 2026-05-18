@@ -10,7 +10,7 @@
         <div class="alert alert-danger mb-4 mx-md-5"><%= flash[:alert] %></div>
       <% end %>
 
-      <%= form_with url: admin_session_path, local: true do |f| %>
+      <%= form_with url: admin_sign_in_path, local: true do |f| %>
 
         <div class="row mb-3 align-items-center justify-content-center">
           <%= f.label :email_address, "メールアドレス", class: "col-sm-3 col-form-label" %>
