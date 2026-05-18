@@ -1,0 +1,96 @@
+<div class="container py-5">
+
+  <div class="row">
+
+    <!-- ジャンル検索 -->
+    <div class="col-md-3">
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th class="text-center">ジャンル検索</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>ケーキ</td>
+          </tr>
+
+          <tr>
+            <td>焼き菓子</td>
+          </tr>
+
+          <tr>
+            <td>プリン</td>
+          </tr>
+
+          <tr>
+            <td>キャンディ</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <!-- 商品詳細 -->
+    <div class="col-md-9">
+
+      <div class="row">
+
+        <!-- 商品画像 -->
+        <div class="col-md-5">
+
+          <div class="border d-flex align-items-center justify-content-center"
+               style="height: 300px;">
+
+            商品画像
+
+          </div>
+
+        </div>
+
+        <!-- 商品情報 -->
+        <div class="col-md-7">
+
+          <h2 class="fw-bold mb-4">
+            いちごのショートケーキ（ホール）
+          </h2>
+
+          <p class="mb-5 fs-5">
+            栃木県産のとちおとめを贅沢に使用しています。
+          </p>
+
+          <h3 class="mb-5 fw-bold">
+            ¥2,750
+            <span class="fs-6">(税込)</span>
+          </h3>
+
+          <div class="d-flex align-items-center">
+
+            <!-- 個数選択 -->
+            <select class="form-select w-25 me-4">
+              <option>個数選択</option>
+
+              <% (1..10).each do |i| %>
+                <option><%= i %></option>
+              <% end %>
+
+            </select>
+
+            <!-- カートボタン -->
+            <%= link_to "カートに入れる",
+            "#",
+            class: "btn btn-success px-4 py-2" %>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
