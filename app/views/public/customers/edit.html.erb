@@ -1,0 +1,102 @@
+<div class="container py-5">
+
+  <h2 class="mb-5">
+    <span class="bg-light px-3">会員情報編集</span>
+  </h2>
+
+  <%= form_with model: @customer do |f| %>
+
+    <% if @customer.errors.any? %>
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          <% @customer.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-3">
+        <%= f.label :last_name, "氏名" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.text_field :last_name, class: "form-control" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.text_field :first_name, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-3">
+        <%= f.label :last_name_kana, "フリガナ" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.text_field :last_name_kana, class: "form-control" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.text_field :first_name_kana, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-3">
+        <%= f.label :postal_code, "郵便番号" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.text_field :postal_code, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-3">
+        <%= f.label :address, "住所" %>
+      </div>
+
+      <div class="col-md-6">
+        <%= f.text_field :address, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row mb-3 align-items-center">
+      <div class="col-md-3">
+        <%= f.label :telephone_number, "電話番号" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.text_field :telephone_number, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row mb-5 align-items-center">
+      <div class="col-md-3">
+        <%= f.label :email_address, "メールアドレス" %>
+      </div>
+
+      <div class="col-md-3">
+        <%= f.email_field :email_address, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-3"></div>
+
+      <div class="col-md-9 d-flex gap-3">
+        <%= f.submit "編集内容を保存",
+        class: "btn btn-success px-4" %>
+
+        <%= link_to "退会する",
+        "#",
+        class: "btn btn-danger px-4 ms-5" %>
+      </div>
+    </div>
+
+  <% end %>
+
+</div>
