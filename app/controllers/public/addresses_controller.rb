@@ -31,7 +31,7 @@ class Public::AddressesController < ApplicationController
   def update
     @address = Address.find(params[:id])
     if @address.update(address_params)
-      redirect_to public_addresses_index_path, notice: "配送先を変更しました。"
+      redirect_to addresses_path, notice: "配送先を変更しました。"
     else
       render :edit
     end
