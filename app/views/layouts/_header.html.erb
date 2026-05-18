@@ -11,7 +11,7 @@
       <div>
 
 
-        <% if authenticated_customer? %>
+        <% if respond_to?(:authenticated_customer?) && authenticated_customer? %>
 
           <!-- ログイン中 -->
           <%= link_to "マイページ", customers_my_page_path, class: "me-4 text-dark text-decoration-none d-inline-block border border-2 rounded p-2" %>
