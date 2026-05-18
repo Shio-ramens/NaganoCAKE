@@ -1,5 +1,6 @@
 
 Rails.application.routes.draw do
+
   namespace :public do
     get "addresses/index"
   end
@@ -26,6 +27,13 @@ Rails.application.routes.draw do
     resources :customers, only: [:show, :edit, :update]
     resources :passwords, param: :token
     resources :items, only: [:index, :show]
+
+    resources :cart_items, only: [:index, :create, :update, :destroy] do
+      collection do
+        delete :destroy_all
+      end
+    end
+
     resources :orders, only: [:new, :index, :show, :create] do
       collection do
         post 'confirm'
