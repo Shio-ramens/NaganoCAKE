@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 
   # 管理者用
   namespace :admin do
+    get "homes/top"
     get    'sign_in',  to: 'sessions#new',     as: :sign_in
     post   'sign_in',  to: 'sessions#create'
     delete 'sign_out', to: 'sessions#destroy', as: :sign_out
