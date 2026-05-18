@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
     resources :customers, only: [:show, :edit, :update]
     resources :passwords, param: :token
+    resources :items, only: [:index, :show]
     resources :orders, only: [:new, :index, :show, :create] do
       collection do
         post 'confirm'
