@@ -1,19 +1,53 @@
-<h2>ログイン</h2>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+      
+      <h2 class="mb-5">
+        <span class="bg-light px-3">ログイン</span>
+      </h2>
 
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+      <h5 class="mb-4 ms-md-5">
+        <span class="bg-light px-3">会員の方はこちらからログイン</span>
+      </h5>
 
-<%= form_with url: session_path do |f| %>
-  <div>
-    <%= f.label :email_address, "メールアドレス" %>
-    <%= f.email_field :email_address, required: true, autofocus: true %>
+      <% if flash[:alert] %>
+        <div class="alert alert-danger mb-4 mx-md-5"><%= flash[:alert] %></div>
+      <% end %>
+
+      <%= form_with url: customers_sign_in_path, local: true do |f| %>
+        
+        <div class="row mb-3 align-items-center justify-content-center">
+          <%= f.label :email_address, "メールアドレス", class: "col-sm-3 col-form-label" %>
+          <div class="col-sm-7">
+            <%= f.email_field :email_address, placeholder: "sample@example.com", class: "form-control", required: true, autofocus: true %>
+          </div>
+        </div>
+
+        <div class="row mb-4 align-items-center justify-content-center">
+          <%= f.label :password, "パスワード", class: "col-sm-3 col-form-label" %>
+          <div class="col-sm-7">
+            <%= f.password_field :password, class: "form-control", required: true %>
+          </div>
+        </div>
+
+        <div class="row mb-5 justify-content-center">
+          <div class="col-sm-7 offset-sm-3">
+            <%= f.submit "ログイン", class: "btn btn-primary px-5 fw-bold" %>
+          </div>
+        </div>
+      <% end %>
+
+      <h5 class="mb-4 ms-md-5">
+        <span class="bg-light px-3">会員登録がお済みでない方</span>
+      </h5>
+      
+      <div class="ms-md-5 ps-md-4">
+        <%= link_to "こちら", customers_sign_up_path, class: "fw-bold mx-2" %>
+        <span>から新規登録を行ってください。</span>
+      </div>
+
+    </div>
   </div>
-
-  <div>
-    <%= f.label :password, "パスワード" %>
-    <%= f.password_field :password, required: true %>
-  </div>
-
-  <%= f.submit "ログイン" %>
-<% end %>
-
-<%= link_to "パスワードを忘れた方", new_password_path %>
+  
+  <div style="height: 200px;"></div>
+</div>

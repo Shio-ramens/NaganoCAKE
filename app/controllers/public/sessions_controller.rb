@@ -9,14 +9,14 @@ class Public::SessionsController < Public::ApplicationController
   def create
     if customer = Customer.authenticate_by(params.permit(:email_address, :password))
       start_new_session_for customer
-      redirect_to after_authentication_url
+      redirect_to customers_my_page_path
     else
-      redirect_to new_session_path, alert: "メールアドレスまたはパスワードが正しくありません"
+      redirect_to customers_sign_in_path, alert: "メールアドレスまたはパスワードが正しくありません"
     end
   end
 
   def destroy
     terminate_session
-    redirect_to new_session_path
+    redirect_to customers_sign_in_path
   end
 end
