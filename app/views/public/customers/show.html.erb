@@ -1,6 +1,71 @@
 <div class="container py-5">
 
-<h2 class="mb-5">
-  <span class="bg-ligh px-3">マイページ</span>
-</h2>
+  <h2 class="mb-5">
+    <span class="bg-light px-3">マイページ</span>
+  </h2>
 
+  <div class="d-flex align-items-center mb-3">
+    <h4 class="me-4 mb-0 fw-bold">登録情報</h4>
+
+    <%= link_to "編集する",
+    edit_customer_path(@customer),
+    class: "btn btn-success px-4" %>
+  </div>
+
+  <table class="table table-bordered w-75 mb-5">
+    <tbody>
+      <tr>
+        <th class="table-light w-25">氏名</th>
+        <td>
+          <%= @customer.last_name %>
+          <%= @customer.first_name %>
+        </td>
+      </tr>
+
+      <tr>
+        <th class="table-light">カナ</th>
+        <td>
+          <%= @customer.last_name_kana %>
+          <%= @customer.first_name_kana %>
+        </td>
+      </tr>
+
+      <tr>
+        <th class="table-light">郵便番号</th>
+        <td><%= @customer.postal_code %></td>
+      </tr>
+
+      <tr>
+        <th class="table-light">住所</th>
+        <td><%= @customer.address %></td>
+      </tr>
+
+      <tr>
+        <th class="table-light">電話番号</th>
+        <td><%= @customer.telephone_number %></td>
+      </tr>
+
+      <tr>
+        <th class="table-light">メールアドレス</th>
+        <td><%= @customer.email_address %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex align-items-center mb-4">
+    <h4 class="me-4 mb-0 fw-bold">配送先</h4>
+
+    <%= link_to "一覧を見る",
+    "#",
+    class: "btn btn-primary px-4" %>
+  </div>
+
+  <div class="d-flex align-items-center">
+    <h4 class="me-4 mb-0 fw-bold">注文履歴</h4>
+
+    <%= link_to "一覧を見る",
+    "#",
+    class: "btn btn-primary px-4" %>
+  </div>
+
+</div>
