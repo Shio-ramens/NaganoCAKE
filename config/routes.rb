@@ -21,6 +21,7 @@ Rails.application.routes.draw do
         get 'thanks'
       end
     end
+    resources :addresses, only: [:index, :edit, :create, :update, :destroy]
   end
 
   # 管理者用
