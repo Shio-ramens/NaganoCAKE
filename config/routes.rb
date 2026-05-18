@@ -12,8 +12,7 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: "homes#top"
     get "about", to: "homes#about"
-    get "customers/my_page", to: "customers#show"
-    resource :customer, only: [:show, :edit, :update]
+    resources :customers, only: [:show, :edit, :update]
     resources :passwords, param: :token
   end
 
