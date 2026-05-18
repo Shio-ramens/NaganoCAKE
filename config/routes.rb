@@ -15,6 +15,12 @@ Rails.application.routes.draw do
     get "customers/my_page", to: "customers#show"
     resource :customer, only: [:show, :edit, :update]
     resources :passwords, param: :token
+    resources :orders, only: [:new, :index, :show, :create] do
+      collection do
+        post 'confirm'
+        get 'thanks'
+      end
+    end
   end
 
   # 管理者用

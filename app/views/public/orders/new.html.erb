@@ -1,0 +1,62 @@
+<h2>注文入力情報</h2>
+
+<%= form_with model: @order, url: confirm_orders_path, method: :post, data: { turbo: false } do |f| %>
+
+  <h3>支払い方法</h3>
+  <div>
+    <%= f.radio_button :payment_method, Order.payment_methods.key(0) %>
+    <%= f.label :payment_method_credit_card, Order.payment_methods_i18n[:credit_card] %>
+  </div>
+
+  <div>
+    <%= f.radio_button :payment_method, Order.payment_methods.key(1) %>
+    <%= f.label :payment_method_transfer, Order.payment_methods_i18n[:transfer] %>
+  </div>
+
+  <h3 style="margin-top: 30px;">お届け先</h3>
+
+  <div>
+    <%= f.radio_button :select_address, "0", checked: true %>
+    <%= f.label :select_address_0, "ご自身の住所" %>
+    <p>
+      <div style="margin-left: 25px;">
+        <p>〒150-0041 東京都渋谷区神南1丁目19-11 パークウェースクエア2 4階<br>山田花子</p>
+      </div>
+    </p>
+  </div>
+
+  <div style="margin-top: 15px;">
+    <%= f.radio_button :select_address, "1" %>
+    <%= f.label :select_address_1, "登録済住所から選択" %>
+    <div style="margin-left: 25px; margin-top: 5px;">
+      <%= f.select :address_id, options_from_collection_for_select(Address.all, :id, :address_display) %>
+    </div>
+  </div>
+
+  <div style="margin-top: 15px;">
+    <%= f.radio_button :select_address, "2" %>
+    <%= f.label :select_address_2, "新しいお届け先" %>
+    
+    <div style="margin-left: 25px; margin-top: 10px;">
+      <table>
+        <tr>
+          <td><%= f.label :postal_code, "郵便番号(ハイフンなし)" %></td>
+          <td><%= f.text_field :postal_code, placeholder: "0000000" %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :address, "住所" %></td>
+          <td><%= f.text_field :address, placeholder: "東京都渋谷区代々木神園町0-0", size: 60 %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :name, "宛名" %></td>
+          <td><%= f.text_field :name, placeholder: "令和道子" %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div style="margin-top: 30px; margin-left: 150px;">
+   <%= f.submit "確認画面へ進む", class: "btn btn-primary" %>
+  </div>
+
+<% end %>

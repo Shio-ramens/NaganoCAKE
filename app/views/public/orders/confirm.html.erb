@@ -1,0 +1,65 @@
+<h2>注文情報確認画面</h2>
+
+<div class="row">
+  <div class="col-md-9">
+    <table class="table table-bordered">
+      <thead>
+        <tr class="table-active">
+          <th>商品名</th>
+          <th>単価(税込)</th>
+          <th>数量</th>
+          <th>小計</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="4" class="text-center text-muted">
+            （ここにカートの商品一覧が表示されます。明日ログイン機能が直ったら結合しましょう！）
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-3">
+    <table class="table table-bordered">
+      <tr>
+        <th class="table-active">送料</th>
+        <td>¥800</td>
+      </tr>
+      <tr>
+        <th class="table-active">商品合計</th>
+        <td>¥0</td>
+      </tr>
+      <tr>
+        <th class="table-active">請求金額</th>
+        <td>¥800</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="row style="margin-top: 30px;">
+  <div class="col-md-12">
+    <table class="table table-borderless">
+      <tr>
+        <th style="width: 15%;">支払方法</th>
+        <td>
+          <strong><%= @order.payment_method_i18n %></strong>
+          <span class="text-muted">（※後ほど日本語化（enum）の設定をすると「クレジットカード」等になります）</span>
+        </td>
+      </tr>
+      <tr>
+        <th>お届け先</th>
+        <td>
+          〒<%= @order.postal_code %> <%= @order.address %><br>
+          <%= @order.name %>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="text-center" style="margin-top: 40px;">
+  <%= button_to "注文を確定する", orders_path, method: :post, class: "btn btn-success btn-lg", data: { turbo: false } %>
+</div>
