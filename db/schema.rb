@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_19_010833) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_19_060110) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -49,11 +49,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_19_010833) do
   end
 
   create_table "admins", force: :cascade do |t|
-    t.string "email_address"
-    t.string "password_digest"
+    t.string "email"
+    t.string "encrypted_password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email_address"], name: "index_admins_on_email_address", unique: true
+    t.index ["email"], name: "index_admins_on_email", unique: true
   end
 
   create_table "carts", force: :cascade do |t|
@@ -67,8 +67,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_19_010833) do
   end
 
   create_table "customers", force: :cascade do |t|
-    t.string "email_address", null: false
-    t.string "password_digest", null: false
+    t.string "email", null: false
+    t.string "encrypted_password", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "last_name", null: false
@@ -79,7 +79,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_19_010833) do
     t.string "address", null: false
     t.string "telephone_number", null: false
     t.boolean "is_active", default: true, null: false
-    t.index ["email_address"], name: "index_customers_on_email_address", unique: true
+    t.index ["email"], name: "index_customers_on_email", unique: true
   end
 
   create_table "genres", force: :cascade do |t|

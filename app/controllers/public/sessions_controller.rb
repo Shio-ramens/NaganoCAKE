@@ -7,7 +7,7 @@ class Public::SessionsController < Public::ApplicationController
   end
 
   def create
-    customer = Customer.authenticate_by(params.permit(:email_address, :password))
+    customer = Customer.authenticate_by(params.permit(:email, :password))
     if customer && customer.is_active
       start_new_session_for customer
       redirect_to customers_my_page_path
@@ -24,7 +24,7 @@ class Public::SessionsController < Public::ApplicationController
   private
 
   def customer_state
-    customer = Customer.find_by(email_address: params[:email_address])
+    customer = Customer.find_by(email: params[:email])
     return if customer.nil?
     return unless customer.authenticate(params[:password])
     unless customer.is_active
