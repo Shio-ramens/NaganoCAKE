@@ -1,4 +1,18 @@
 <div class="container my-5">
+  <% if @item.errors.any? %>
+    <div class="alert alert-danger shadow-sm mb-4">
+      <h5 class="font-weight-bold mb-2">入力内容に不備があります：</h5>
+      <ul class="mb-0">
+        <% if @item.errors[:price].any? %>
+          <li>税抜価格を入力してください</li>
+        <% end %>
+        
+        <% if @item.errors[:name].any? %>
+          <li>商品名を入力してください</li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="row">
     <div class="col-md-8 offset-md-2">
       

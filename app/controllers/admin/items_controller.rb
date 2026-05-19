@@ -12,7 +12,7 @@ class Admin::ItemsController < Admin::ApplicationController
     if @item.save
       redirect_to admin_item_path(@item)
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
