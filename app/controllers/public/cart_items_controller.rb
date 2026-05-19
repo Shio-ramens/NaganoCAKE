@@ -4,25 +4,17 @@ class Public::CartItemsController < Public::ApplicationController
   end
 
   def create
-    item = Item.find(params[:item_id])
-
-    cart_item = Cart.find_by(
-      customer_id: current_customer.id,
-      item_id: item.id
-    )
-
-    if cart_item
-      cart_item.amount += params[:amount].to_i
-      cart_item.save
+    @cart_item = Cart.new
+    @cart_item.customer_id = current_customer.id # IDの直接代入はOKです
+    @cart_item.item = Item.find(params[:cart][:item_id]) # ここでオブジェクトを渡す
+    @cart_item.amount = params[:cart][:amount].to_i
+    
+    if @cart_item.save
+      redirect_to cart_items_path
     else
-      Cart.create(
-        customer_id: current_customer.id,
-        item_id: item.id,
-        amount: params[:amount].to_i
-      )
+      puts @cart_item.errors.full_messages # ここでエラー詳細が出ます
+      redirect_to item_path(params[:cart][:item_id])
     end
-
-    redirect_to cart_items_path
   end
 
   def update
@@ -36,6 +28,11 @@ class Public::CartItemsController < Public::ApplicationController
     cart = Cart.find(params[:id])
     cart.destroy
 
+    redirect_to cart_items_path
+  end
+
+  def destroy_all
+    Cart.where(customer_id: current_customer.id).destroy_all
     redirect_to cart_items_path
   end
 end

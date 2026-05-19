@@ -49,16 +49,13 @@
           </h3>
 
           <%# カート機能作成時に form_with に書き換えますが、一旦見た目だけ修正 %>
-          <div class="d-flex align-items-center">
-            <select class="form-select w-25 me-4">
-              <option selected disabled>個数選択</option>
-              <% (1..10).each do |i| %>
-                <option value="<%= i %>"><%= i %></option>
-              <% end %>
-            </select>
-
-            <%= link_to "カートに入れる", "#", class: "btn btn-success px-4 py-2" %>
-          </div>
+          <%= form_with model: @cart_item, url: cart_items_path, method: :post do |f| %>
+            <%= f.hidden_field :item_id, value: @item.id %>
+            <div class="d-flex align-items-center">
+              <%= f.select :amount, options_for_select((1..10)), { include_blank: '個数選択' }, class: "form-select w-25 me-4" %>
+              <%= f.submit "カートに入れる", class: "btn btn-success px-4 py-2" %>
+            </div>
+          <% end %>
         </div>
 
       </div>

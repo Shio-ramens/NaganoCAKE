@@ -6,7 +6,7 @@
       </h4>
     </div>
     <div class="col-4 text-end">
-      <%= link_to "カートを空にする", cart_items_all_destroy_path, method: :delete, class: "btn btn-danger btn-sm", data: { confirm: '本当にカートを空にしますか？' } %>
+      <%= link_to "カートを空にする", destroy_all_cart_items_path, method: :delete, class: "btn btn-danger btn-sm", data: { confirm: '本当にカートを空にしますか？' } %>
     </div>
   </div>
 
@@ -31,14 +31,14 @@
             <%= image_tag cart.item.get_image(60, 40), class: "me-2 border" %>
             <span class="fw-bold"><%= cart.item.name %></span>
           </td>
-          <td><%= cart.item.with_tax_price.to_s(:delimited) %></td>
+          <td><%= number_with_delimiter(cart.item.with_tax_price) %></td>
           <td>
             <%= form_with model: cart, url: cart_item_path(cart), method: :patch, class: "d-flex align-items-center" do |f| %>
               <%= f.select :amount, *[1..10], {}, { class: "form-select form-select-sm me-2", style: "width: 70px;" } %>
               <%= f.submit "変更", class: "btn btn-success btn-sm" %>
             <% end %>
           </td>
-          <td><%= subtotal.to_s(:delimited) %></td>
+          <td><%= number_with_delimiter(subtotal) %></td>
           <td class="text-center">
             <%= link_to "削除する", cart_item_path(cart), method: :delete, class: "btn btn-danger btn-sm" %>
           </td>
@@ -46,6 +46,9 @@
       <% end %>
     </tbody>
   </table>
+  <div class="text-end">
+    <p>合計金額: <%= number_with_delimiter(total) %></p>
+  </div>
 
   <div class="row mt-4">
     <div class="col-md-6">
@@ -55,7 +58,7 @@
       <table class="table table-bordered">
         <tr>
           <th class="table-light w-50">合計金額</th>
-          <td class="fw-bold"><%= total.to_s(:delimited) %></td>
+          <td class="fw-bold"><%= number_with_delimiter(total) %></td>
         </tr>
       </table>
     </div>
