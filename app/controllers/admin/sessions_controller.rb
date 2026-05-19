@@ -1,21 +1,36 @@
 class Admin::SessionsController < ApplicationController
+  
 
   def new
-    
   end
 
   def create
+   
+    admin = Admin.find_by(email_address: params[:email_address])
+
     
-    if admin = Admin.authenticate_by(params.permit(:email_address, :password))
-      start_new_session_for admin
-      redirect_to admin_root_path
+    if admin && admin.authenticate(params[:password])
+      
+      
+      admin_session = admin.sessions.create!
+      
+      
+      cookies.signed[:admin_session_id] = { value: admin_session.id, expires: 2.weeks.from_now, permanent: true }
+      
+      redirect_to admin_root_path, notice: "ログインに成功しました！"
     else
-      redirect_to admin_sign_in_path, alert: "メールアドレスまたはパスワードが正しくありません"
+      flash.now[:alert] = "メールアドレスまたはパスワードが正しくありません"
+      render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
-    terminate_session
-    redirect_to admin_sign_in_path
+    
+    if admin_session_id = cookies.signed[:admin_session_id]
+      Session.find_by(id: admin_session_id)&.destroy
+    end
+    
+    cookies.delete(:admin_session_id)
+    redirect_to admin_sign_in_path, notice: "ログアウトしました"
   end
 end
