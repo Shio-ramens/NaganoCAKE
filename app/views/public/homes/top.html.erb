@@ -1,90 +1,56 @@
-<div class="conainer">
+<div class="container py-5">
   <div class="row">
-    <div class="mx-auto col-11 col-sm-10 col-lg-8 col-xl-6">
-  <!-- メインビジュアル -->
-  <section class="main-visual text-senter py-5">
-    <h4>
-    ようこそ、ながのCAKEへ！<br>
-    このサイトは、ケーキ販売のECサイトになります。<br>
-    会員でない方も商品の閲覧はできますが、<br>
-    購入には会員登録が必要になります。
-    </h4>
-  </section>
 
-  <!-- 新着商品 -->
-  <section class="new-items py-5">
-  <h2 class="mb-4">新着商品</h2>
-    <div class="row">
-
-      <div class="col-md-2 col-4 mb-3">
-        <div class="card h-100">
-
-          <img
-            src="https://placehold.jp/300x200.png"
-            class="card-img-top">
-
-          <div class="card-body">
-            <h5 class="card-title">ショートケーキ</h5>
-            <p>¥400</p>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col-md-2 col-4 mb-3">
-        <div class="card h-100">
-
-          <img
-            src="https://placehold.jp/300x200.png"
-            class="card-img-top">
-
-          <div class="card-body">
-            <h5 class="card-title">チョコケーキ</h5>
-            <p>¥450</p>
-          </div>
-
-        </div>
-      </div>
-
-            <div class="col-md-2 col-4 mb-3">
-        <div class="card h-100">
-
-          <img
-            src="https://placehold.jp/300x200.png"
-            class="card-img-top">
-
-          <div class="card-body">
-            <h5 class="card-title">チョコケーキ</h5>
-            <p>¥450</p>
-          </div>
-
-        </div>
-      </div>
-
-            <div class="col-md-2 col-4 mb-3">
-        <div class="card h-100">
-
-          <img
-            src="https://placehold.jp/300x200.png"
-            class="card-img-top">
-
-          <div class="card-body">
-            <h5 class="card-title">チョコケーキ</h5>
-            <p>¥450</p>
-          </div>
-
-        </div>
-      </div>
-      <div class="text-end">
-        <a href="#"
-         class="text-primary text-decoration-underline">
-         全ての商品を見る ＞
-        </a>
-      </div>
+    <div class="col-md-2">
+      <table class="table table-bordered">
+        <thead>
+          <tr><th class="text-center bg-light">ジャンル検索</th></tr>
+        </thead>
+        <tbody>
+          <% @genres.each do |genre| %>
+            <tr>
+              <td><%= link_to genre.name, items_path(genre_id: genre.id), class: "text-dark text-decoration-none" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
 
-  </section>
-
+    <div class="col-md-9 offset-md-1">
+      
+      <div class="position-relative border mb-5 d-flex align-items-center justify-content-center" style="height: 400px; background: #f8f9fa;">
+        <div class="p-4 bg-white border shadow-sm mx-auto text-center" style="max-width: 500px; opacity: 0.9;">
+          <p class="mb-0 fs-4 fw-bold lh-lg">
+            ようこそ、ながのCAKEへ！<br>
+            このサイトは、ケーキ販売のECサイトになります。<br>
+            会員でない方も商品の閲覧はできますが、<br>
+            購入には会員登録が必要になります。
+          </p>
+        </div>
       </div>
+
+      <h2 class="fw-bold mb-4">新着商品</h2>
+      
+      <div class="row g-4">
+        <% @items.each do |item| %>
+          <div class="col-md-3">
+            <%= link_to item_path(item), class: "text-dark text-decoration-none" do %>
+              <% if item.image.attached? %>
+                <%= image_tag item.image, size: "200x150", class: "w-100 object-fit-cover border rounded" %>
+              <% else %>
+                <div class="border bg-light d-flex align-items-center justify-content-center" style="height: 150px;">No Image</div>
+              <% end %>
+              <p class="mt-2 mb-1 fw-bold text-truncate"><%= item.name %></p>
+              <p>¥<%= number_with_delimiter(item.price) %></p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="text-end mt-4">
+        <%= link_to "全ての商品を見る >", items_path, class: "text-primary text-decoration-none" %>
+      </div>
+
     </div>
   </div>
+</div>
