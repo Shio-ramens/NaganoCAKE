@@ -1,0 +1,67 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+      
+      <h4 class="mb-5">
+        <span class="bg-light px-3"><%= @customer.last_name %><%= @customer.first_name %>さんの会員詳細</span>
+      </h4>
+
+      <div class="row mb-3">
+        <div class="col-md-3 fw-bold">会員ID</div>
+        <div class="col-md-9"><%= @customer.id %></div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-3 fw-bold">氏名</div>
+        <div class="col-md-9"><%= @customer.last_name %>　<%= @customer.first_name %></div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-3 fw-bold">フリガナ</div>
+        <div class="col-md-9"><%= @customer.last_name_kana %>　<%= @customer.first_name_kana %></div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-3 fw-bold">郵便番号</div>
+        <div class="col-md-9"><%= @customer.postal_code %></div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-3 fw-bold">住所</div>
+        <div class="col-md-9"><%= @customer.address %></div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-3 fw-bold">電話番号</div>
+        <div class="col-md-9"><%= @customer.telephone_number %></div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-3 fw-bold">メールアドレス</div>
+        <div class="col-md-9"><%= @customer.email_address %></div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-md-3 fw-bold">会員ステータス</div>
+        <div class="col-md-9">
+          <% if @customer.is_active %>
+            <b class="text-success">有効</b>
+          <% else %>
+            <b class="text-secondary">退会</b>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 offset-md-3">
+          <%= link_to "編集する", edit_admin_customer_path(@customer), class: "btn btn-success px-4" %>
+        </div>
+        <div class="col-md-4">
+          <%# 注文履歴一覧へのリンク %>
+          <%= link_to "注文履歴一覧を見る", admin_root_path, class: "btn btn-primary px-4" %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
