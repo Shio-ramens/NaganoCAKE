@@ -1,7 +1,4 @@
-class Public::AddressesController < ApplicationController
-
-  helper_method :authenticated_customer?
-  def authenticated_customer?; false; end
+class Public::AddressesController < Public::ApplicationController
 
   def index
     @address = Address.new

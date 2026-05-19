@@ -23,7 +23,7 @@ class Public::RegistrationsController < Public::ApplicationController
       :first_name,
       :last_name_kana,
       :first_name_kana,
-      :email_address,
+      :email,
       :postal_code,
       :address,
       :telephone_number,

@@ -1,8 +1,9 @@
 class Customer < ApplicationRecord
+  alias_attribute :password_digest, :encrypted_password
   has_secure_password
   has_many :sessions, dependent: :destroy
 
-  normalizes :email_address, with: ->(e) { e.strip.downcase }
+  normalizes :email, with: ->(e) { e.strip.downcase }
 
   validates :last_name, presence: true
   validates :first_name, presence: true
@@ -11,7 +12,7 @@ class Customer < ApplicationRecord
   validates :postal_code, presence: true
   validates :address, presence: true
   validates :telephone_number, presence: true
-  validates :email_address, presence: true
+  validates :email, presence: true
 
   validates :password,
   length: { minimum: 6 },

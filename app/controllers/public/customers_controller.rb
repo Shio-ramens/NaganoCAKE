@@ -40,7 +40,7 @@ class Public::CustomersController < Public::ApplicationController
       :postal_code,
       :address,
       :telephone_number,
-      :email_address
+      :email
     )
   end
 end
