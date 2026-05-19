@@ -1,6 +1,6 @@
 class Cart < ApplicationRecord
-  belongs_to :item
   belongs_to :customer
+  belongs_to :item
 
   validates :amount, numericality: { greater_than: 0 }
 end
