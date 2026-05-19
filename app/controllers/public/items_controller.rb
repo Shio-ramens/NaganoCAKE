@@ -1,4 +1,4 @@
-class Public::ItemsController < Public::ApplicationController
+class Public::ItemsController < ApplicationController
 
   def index
     @genres = Genre.all
