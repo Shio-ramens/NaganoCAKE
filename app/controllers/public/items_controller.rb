@@ -7,7 +7,7 @@ class Public::ItemsController < ApplicationController
       @genre = Genre.find(params[:genre_id])
       @items = @genre.items.where(is_active: true)
     else
-      @items = Item.where(is_active: true)
+      @items = Item.where(is_active: true).page(params[:page]).per(8)
     end
   end
 
