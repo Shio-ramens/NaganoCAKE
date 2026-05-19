@@ -6,4 +6,6 @@ class Item < ApplicationRecord
   end
 
   has_one_attached :image
+
+  validates :price, presence: true
 end
