@@ -1,0 +1,63 @@
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+      
+      <h4 class="bg-light d-inline-block px-3 py-1 mb-5 text-dark font-weight-bold">
+        商品詳細
+      </h4>
+
+      <div class="row">
+        <div class="col-md-4 mb-4 text-center">
+          <% if @item.image.attached? %>
+            <%= image_tag @item.image, class: "img-fluid rounded shadow-sm border", style: "max-height: 250px; object-fit: cover;" %>
+          <% else %>
+            <div class="bg-light border rounded d-flex align-items-center justify-content-center text-secondary font-weight-bold shadow-sm" style="height: 200px; width: 100%;">
+              No Image
+            </div>
+          <% end %>
+        </div>
+
+        <div class="col-md-8">
+          <table class="table table-borderless table-sm">
+            <tbody>
+              <tr class="row mb-3">
+                <td class="col-sm-3 font-weight-bold">商品名</td>
+                <td class="col-sm-9 h5 font-weight-bold text-dark"><%= @item.name %></td>
+              </tr>
+              <tr class="row mb-3">
+                <td class="col-sm-3 font-weight-bold">商品説明</td>
+                <td class="col-sm-9 text-muted" style="white-space: pre-wrap;"><%= @item.introduction %></td>
+              </tr>
+              <tr class="row mb-3">
+                <td class="col-sm-3 font-weight-bold">ジャンル</td>
+                <td class="col-sm-9"><span class="badge badge-secondary px-3 py-2"><%= @item.genre.name %></span></td>
+              </tr>
+              <tr class="row mb-3">
+                <td class="col-sm-3 font-weight-bold">税込価格<br><small class="text-secondary">(税抜価格)</small></td>
+                <td class="col-sm-9 h5 font-weight-bold text-danger">
+                  <%= number_to_currency((@item.price * 1.1).floor, unit: "", precision: 0) %> 円
+                  <span class="text-secondary h6 font-weight-normal">（<%= number_to_currency(@item.price, unit: "", precision: 0) %> 円）</span>
+                </td>
+              </tr>
+              <tr class="row mb-5">
+                <td class="col-sm-3 font-weight-bold">販売ステータス</td>
+                <td class="col-sm-9 font-weight-bold">
+                  <% if @item.is_active %>
+                    <span class="text-success">販売中</span>
+                  <% else %>
+                    <span class="text-secondary">販売停止中</span>
+                  <% end %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="text-left mt-4">
+            <%= link_to "編集する", edit_admin_item_path(@item), class: "btn btn-success btn-lg px-4 font-weight-bold shadow-sm" %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
