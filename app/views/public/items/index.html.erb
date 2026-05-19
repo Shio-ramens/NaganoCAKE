@@ -23,7 +23,7 @@
     <div class="col-md-9 offset-md-1">
       <div class="d-flex align-items-end mb-4">
         <h2 class="me-3 mb-0"><%= @genre ? "#{@genre.name}一覧" : "商品一覧" %></h2>
-        <p class="mb-1">(全<%= @items.count %>件)</p>
+        <p class="mb-1">(全<%= @items.total_count %>件)</p>
       </div>
 
       <div class="row g-4">
@@ -51,7 +51,7 @@
       </div>
 
       <div class="d-flex justify-content-center mt-5">
-        <%#= paginate @items %>
+        <%= paginate @items %>
       </div>
 
     </div>
