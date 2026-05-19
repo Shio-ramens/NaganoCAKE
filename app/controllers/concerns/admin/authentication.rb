@@ -38,7 +38,7 @@ module Admin::Authentication
 
     def request_authentication
       session[:admin_return_to_after_authenticating] = request.url
-      redirect_to new_admin_session_path
+      redirect_to admin_sign_in_path
     end
 
     def after_authentication_url
