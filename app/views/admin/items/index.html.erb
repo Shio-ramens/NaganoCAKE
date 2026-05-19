@@ -1,0 +1,61 @@
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+      
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="bg-light d-inline-block px-3 py-1 m-0 text-dark font-weight-bold">
+          商品一覧
+        </h4>
+        <%= link_to new_admin_item_path, class: "btn btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center", style: "width: 45px; height: 45px; font-size: 24px; font-weight: bold; padding: 0;" do %>
+          +
+        <% end %>
+      </div>
+
+      <table class="table table-hover table-bordered bg-white shadow-sm">
+        <thead class="thead-light">
+          <tr>
+            <th>商品ID</th>
+            <th>商品名</th>
+            <th>税抜価格</th>
+            <th>ジャンル</th>
+            <th>ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @items.each do |item| %>
+            <tr>
+              <td><%= item.id %></td>
+              
+              <td>
+                <%= link_to item.name, admin_item_path(item), class: "text-primary font-weight-bold" %>
+              </td>
+              
+              <td>
+                <%= item.price.to_s(:delimited) if item.respond_to?(:price) %> 円
+              </td>
+              
+              <td>
+                <% if item.genre %>
+                  <%= item.genre.name %>
+                <% else %>
+                  <span class="text-muted">未設定</span>
+                <% end %>
+              </td>
+              
+              <td>
+                <% if item.respond_to?(:is_active) && item.is_active == true %>
+                  <strong class="text-success">販売中</strong>
+                <% elsif item.respond_to?(:is_active) && item.is_active == false %>
+                  <strong class="text-secondary">販売停止中</strong>
+                <% else %>
+                  <strong class="text-success">販売中</strong>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

@@ -45,6 +45,7 @@ Rails.application.routes.draw do
 
   # 管理者用
   namespace :admin do
+    root to: 'homes#top'
     get "homes/top"
     get    'sign_in',  to: 'sessions#new',     as: :sign_in
     post   'sign_in',  to: 'sessions#create'
@@ -52,7 +53,7 @@ Rails.application.routes.draw do
    
     resources :genres, only: [:index, :create, :edit, :update]
     resources :customers, only: [:index, :show, :edit, :update]
-
-    root to: 'homes#top'
+    resources :items, only: [:index, :new, :create, :show, :edit, :update]
+    
   end
 end
