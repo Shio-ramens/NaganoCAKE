@@ -6,32 +6,24 @@ class Public::OrdersController < Public::ApplicationController
   end
 
   def confirm
-    @order = Order.new
-    @order.payment_method = order_params[:payment_method]
+    @order = Order.new(order_params)
+  
+    if params[:order][:address_option] == "0"
+      @order.postal_code = current_customer.postal_code
+      @order.address = current_customer.address
+      @order.name = current_customer.last_name + current_customer.first_name
     
-    # 2. ラジオボタンでどれが選ばれたかによって、@order に入れる住所を分岐させる準備
-    #（※ここの中身は次回以降じっくり作るので、まずはエラーを消すためにガワだけ書きます）
-    case params[:order][:select_address]
-    when "0"
-      # 👇 今はログインしていないので、ダミーの情報を直書きします
-      @order.postal_code = "150-0041"
-      @order.address     = "東京都渋谷区神南1丁目19-11 パークウェースクエア2 4階"
-      @order.name        = "山田 花子"
-    when "1"
-      # 👇 本来は登録済みの住所から探しますが、今はダミーを入れます
-      @order.postal_code = "000-0000"
-      @order.address     = "登録済みのダミー住所"
-      @order.name        = "テスト 太郎"
-    when "2"
-      # ⭕ 新しいお届け先（これは今も今後もこのままでOK！）
-      @order.postal_code = order_params[:postal_code]
-      @order.address     = order_params[:address]
-      @order.name        = order_params[:name]
+    elsif params[:order][:address_option] == "1"
+      @address = Address.find(params[:order][:address_id])
+      @order.postal_code = @address.postal_code
+      @order.address = @address.address
+      @order.name = @address.name
+    
+    elsif params[:order][:address_option] == "2"
     end
 
-    @cart_item = []
-
-    
+    @cart_items = current_customer.cart_items
+    @total = 0
   end
 
   def create

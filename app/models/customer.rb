@@ -2,7 +2,8 @@ class Customer < ApplicationRecord
   alias_attribute :password_digest, :encrypted_password
   has_secure_password
   has_many :sessions, dependent: :destroy
-
+  has_many :addresses, dependent: :destroy
+  
   normalizes :email, with: ->(e) { e.strip.downcase }
 
   validates :last_name, presence: true
