@@ -2,15 +2,16 @@ class Public::AddressesController < Public::ApplicationController
 
   def index
     @address = Address.new
-    @addresses = Address.all 
+    @addresses = current_customer.addresses
  end
 
- def create
-    @address = Address.new(address_params)
+  def create
+    @address = current_customer.addresses.new(address_params)
+
     if @address.save
       redirect_to addresses_path, notice:"配送先を登録しました。"
     else
-      @addresses = Address.all
+      @addresses = current_customer.addresses
       render :index
     end
   end
@@ -26,7 +27,7 @@ class Public::AddressesController < Public::ApplicationController
   end
 
   def update
-    @address = Address.find(params[:id])
+    @address = current_customer.addresses.find(params[:id])
     if @address.update(address_params)
       redirect_to addresses_path, notice: "配送先を変更しました。"
     else
