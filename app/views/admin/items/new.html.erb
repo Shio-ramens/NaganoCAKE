@@ -1,17 +1,36 @@
 <div class="container my-5">
   <% if @item.errors.any? %>
-    <div class="alert alert-danger shadow-sm mb-4">
-      <h5 class="font-weight-bold mb-2">入力内容に不備があります：</h5>
-      <ul class="mb-0">
-        <% if @item.errors[:price].any? %>
-          <li>税抜価格を入力してください</li>
-        <% end %>
-        
-        <% if @item.errors[:name].any? %>
-          <li>商品名を入力してください</li>
-        <% end %>
-      </ul>
-    </div>
+      <div class="alert alert-danger shadow-sm mb-4">
+        <h5 class="font-weight-bold mb-2">入力内容に不備があります：</h5>
+        <ul class="mb-0">
+          
+          <%# ① 商品画像のエラーチェック %>
+          <% if @item.errors[:image].any? %>
+            <li>商品画像を入力してください</li>
+          <% end %>
+
+          <%# ② 商品名のエラーチェック %>
+          <% if @item.errors[:name].any? %>
+            <li>商品名を入力してください</li>
+          <% end %>
+
+          <%# ③ 商品説明のエラーチェック %>
+          <% if @item.errors[:introduction].any? %>
+            <li>商品説明を入力してください</li>
+          <% end %>
+
+          <%# ④ ジャンルのエラーチェック %>
+          <% if @item.errors[:genre_id].any? %>
+            <li>ジャンルを選択してください</li>
+          <% end %>
+
+          <%# ⑤ 税抜価格のエラーチェック %>
+          <% if @item.errors[:price].any? %>
+            <li>税抜価格を入力してください</li>
+          <% end %>
+
+        </ul>
+      </div>
   <% end %>
   <div class="row">
     <div class="col-md-8 offset-md-2">
