@@ -6,7 +6,7 @@
       </h4>
     </div>
     <div class="col-4 text-end">
-      <%= link_to "カートを空にする", destroy_all_cart_items_path, method: :delete, class: "btn btn-danger btn-sm", data: { confirm: '本当にカートを空にしますか？' } %>
+      <%= button_to "カートを空にする", destroy_all_cart_items_path, method: :delete, class: "btn btn-danger btn-sm", data: { confirm: "本当にカートを空にしますか？" } %>
     </div>
   </div>
 
@@ -40,7 +40,7 @@
           </td>
           <td><%= number_with_delimiter(subtotal) %></td>
           <td class="text-center">
-            <%= link_to "削除する", cart_item_path(cart), method: :delete, class: "btn btn-danger btn-sm" %>
+            <%= button_to "削除する", cart_item_path(cart), method: :delete, class: "btn btn-danger btn-sm" %>
           </td>
         </tr>
       <% end %>
