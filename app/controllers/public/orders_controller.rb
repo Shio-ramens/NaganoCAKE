@@ -38,6 +38,7 @@ class Public::OrdersController < Public::ApplicationController
   def create
     @order = current_customer.orders.new(order_params)
     @order.shipping_cost = 800
+    @order.status = 0
   
     if @order.save
       current_customer.cart_items.each do |cart_item|
@@ -61,21 +62,17 @@ class Public::OrdersController < Public::ApplicationController
   end
 
   def index
-    @orders = []
+    @orders = current_customer.orders.order(created_at: :desc)
   end
 
   def show
-    @order = Order.new(
-      postal_code: "150-0041",
-    address: "東京都渋谷区神南1丁目19-11 パークウェースクエア2 4階",
-    name: "山田花子",
-    payment_method: "transfer" 
-    )
+    @order = current_customer.orders.find(params[:id])
+    @order_details = @order.order_details.includes(:item)
   end
 
   private
 
-def order_params
+  def order_params
     params.require(:order).permit(:payment_method, :postal_code, :address, :name, :total_payment, :shipping_cost)
   end
 

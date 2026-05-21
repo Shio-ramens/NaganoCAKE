@@ -11,7 +11,7 @@
       <table class="table table-bordered">
         <tr>
           <th style="background-color: #eee; width: 25%;">注文日</th>
-          <td>2019/11/05</td>
+          <td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
         </tr>
         <tr>
           <th style="background-color: #eee;">配送先</th>
@@ -27,7 +27,7 @@
         </tr>
         <tr>
           <th style="background-color: #eee;">ステータス</th>
-          <td>入金確認</td>
+          <td><%= @order.status_i18n %></td>
         </tr>
       </table>
     </div>
@@ -37,15 +37,16 @@
       <table class="table table-bordered">
         <tr>
           <th style="background-color: #eee; width: 40%;">商品合計</th>
-          <td>1,500</td>
+          <%# 請求額から送料を引いて算出 %>
+          <td><%= number_with_delimiter(@order.total_payment - @order.shipping_cost) %></td>
         </tr>
         <tr>
           <th style="background-color: #eee;">配送料</th>
-          <td>800</td>
+          <td><%= number_with_delimiter(@order.shipping_cost) %></td>
         </tr>
         <tr>
           <th style="background-color: #eee;"><strong>ご請求額</strong></th>
-          <td class="fw-bold">2,300</td>
+          <td class="fw-bold"><%= number_with_delimiter(@order.total_payment) %></td>
         </tr>
       </table>
     </div>
@@ -64,18 +65,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>いちごのショートケーキ</td>
-            <td>500</td>
-            <td>2</td>
-            <td>1000</td>
-          </tr>
-          <tr>
-            <td>ガトーショコラ</td>
-            <td>500</td>
-            <td>1</td>
-            <td>500</td>
-          </tr>
+          <% @order_details.each do |detail| %>
+            <tr>
+              <td><%= detail.item.name %></td>
+              <td><%= number_with_delimiter(detail.price) %></td>
+              <td><%= detail.amount %></td>
+              <td><%= number_with_delimiter(detail.price * detail.amount) %></td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
     </div>

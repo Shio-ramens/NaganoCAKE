@@ -17,56 +17,29 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>2019/11/5</td>
-        <td>
-          〒1500041<br>
-          東京都渋谷区神南1丁目19-11 パークウェースクエア2 4階<br>
-          山田花子
-        </td>
-        <td>
-          いちごのショートケーキ<br>
-          ガトーショコ
-        </td>
-        <td>2,300円</td>
-        <td>入金確認</td>
-        <td class="text-center">
-          <%= link_to "表示する", order_path(1), class: "btn btn-primary btn-sm px-3 fw-bold" %>
-        </td>
-      </tr>
-
-      <tr>
-        <td>2019/10/20</td>
-        <td>
-          〒2440812<br>
-          神奈川県横浜市戸塚区柏尾町3-9-10<br>
-          梅木匠
-        </td>
-        <td>チーズケーキ</td>
-        <td>550円</td>
-        <td>発送済み</td>
-        <td class="text-center">
-          <%= link_to "表示する", order_path(2), class: "btn btn-primary btn-sm px-3 fw-bold" %>
-        </td>
-      </tr>
-
-      <tr>
-        <td>2019/9/8</td>
-        <td>
-          〒1500041<br>
-          東京都渋谷区神南1丁目19-11 パークウェースクエア2 4階<br>
-          山田花子
-        </td>
-        <td>
-          いちごのショートケーキ<br>
-          チーズケーキ
-        </td>
-        <td>3,200円</td>
-        <td>発送済み</td>
-        <td class="text-center">
-          <%= link_to "表示する", order_path(3), class: "btn btn-primary btn-sm px-3 fw-bold" %>
-        </td>
-      </tr>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.created_at.strftime('%Y/%m/%d') %></td>
+          <td>
+            〒<%= order.postal_code %><br>
+            <%= order.address %><br>
+            <%= order.name %>
+          </td>
+          <td>
+            <% order.order_details.each do |detail| %>
+              <%= detail.item.name %><br>
+            <% end %>
+          </td>
+          <td><%= number_with_delimiter(order.total_payment) %>円</td>
+          <td>
+            <%= order.status_i18n %>
+          </td>
+          <td class="text-center">
+            <%# order_path(order) で各注文の詳細ページへ飛ばす %>
+            <%= link_to "表示する", order_path(order), class: "btn btn-primary btn-sm px-3 fw-bold" %>
+          </td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
