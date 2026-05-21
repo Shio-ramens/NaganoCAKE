@@ -29,10 +29,31 @@ class Public::OrdersController < Public::ApplicationController
 
     @cart_items = current_customer.cart_items
     @total = 0
+    @cart_items.each do |cart_item|
+      @total += cart_item.item.with_tax_price * cart_item.amount
+    end
+
   end
 
   def create
-    redirect_to thanks_orders_path
+    @order = current_customer.orders.new(order_params)
+    @order.shipping_cost = 800
+  
+    if @order.save
+      current_customer.cart_items.each do |cart_item|
+        OrderDetail.create!(
+          order_id: @order.id,
+          item_id: cart_item.item_id,
+          price: cart_item.item.with_tax_price, 
+          amount: cart_item.amount,
+          making_status: 0 
+        )
+      end
+      current_customer.cart_items.destroy_all
+      redirect_to thanks_orders_path
+    else
+      render :new
+    end
   end
 
   def thanks
@@ -54,8 +75,8 @@ class Public::OrdersController < Public::ApplicationController
 
   private
 
-  def order_params
-   params.require(:order).permit(:payment_method, :select_address, :postal_code, :address, :name)
+def order_params
+    params.require(:order).permit(:payment_method, :postal_code, :address, :name, :total_payment, :shipping_cost)
   end
 
 end

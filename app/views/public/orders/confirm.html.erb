@@ -1,65 +1,82 @@
-<h2>注文情報確認画面</h2>
+<div class="container mt-5">
+  <h2 class="bg-light d-inline-block px-3 mb-4">注文情報確認</h2>
 
-<div class="row">
-  <div class="col-md-9">
-    <table class="table table-bordered">
-      <thead>
-        <tr class="table-active">
-          <th>商品名</th>
-          <th>単価(税込)</th>
-          <th>数量</th>
-          <th>小計</th>
-        </tr>
-      </thead>
-      <tbody>
+  <div class="row">
+    <div class="col-md-8">
+      <table class="table table-bordered">
+        <thead>
+          <tr class="table-active">
+            <th>商品名</th>
+            <th>単価(税込)</th>
+            <th>数量</th>
+            <th>小計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @cart_items.each do |cart_item| %>
+            <tr>
+              <td>
+                <%# 商品画像（もしあれば）と名前 %>
+                <%# = image_tag cart_item.item.get_image, size: "50x30", class: "mr-2" %>
+                <%= cart_item.item.name %>
+              </td>
+              <td><%= number_with_delimiter(cart_item.item.with_tax_price) %></td>
+              <td><%= cart_item.amount %></td>
+                <%# 小計：税込単価 × 数量 %>
+                <td><%= number_with_delimiter(cart_item.item.with_tax_price * cart_item.amount) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-3 offset-md-1">
+      <table class="table table-bordered">
         <tr>
-          <td colspan="4" class="text-center text-muted">
-            （ここにカートの商品一覧が表示されます。明日ログイン機能が直ったら結合しましょう！）
+          <th class="table-active">送料</th>
+          <td>800</td>
+        </tr>
+        <tr>
+          <th class="table-active">商品合計</th>
+          <td><%= number_with_delimiter(@total) %></td>
+        </tr>
+        <tr>
+          <th class="table-active">請求金額</th>
+          <td><strong><%= number_with_delimiter(@total + 800) %></strong></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <table class="table table-borderless">
+        <tr>
+          <th style="width: 15%;">支払方法</th>
+          <td><%= @order.payment_method_i18n %></td>
+        </tr>
+        <tr>
+          <th>お届け先</th>
+          <td>
+            〒<%= @order.postal_code %> <%= @order.address %><br>
+            <%= @order.name %>
           </td>
         </tr>
-      </tbody>
-    </table>
+      </table>
+    </div>
   </div>
 
-  <div class="col-md-3">
-    <table class="table table-bordered">
-      <tr>
-        <th class="table-active">送料</th>
-        <td>¥800</td>
-      </tr>
-      <tr>
-        <th class="table-active">商品合計</th>
-        <td>¥0</td>
-      </tr>
-      <tr>
-        <th class="table-active">請求金額</th>
-        <td>¥800</td>
-      </tr>
-    </table>
+  <div class="text-center mt-5">
+    <%= form_with model: @order, url: orders_path, method: :post do |f| %>
+      <%# 確定ボタンを押した時に情報を送るため、hidden_fieldで値を保持します %>
+      <%= f.hidden_field :postal_code %>
+      <%= f.hidden_field :address %>
+      <%= f.hidden_field :name %>
+      <%= f.hidden_field :payment_method %>
+      <%= f.hidden_field :total_payment, value: @total + 800 %>
+      <%= f.hidden_field :shipping_cost, value: 800 %>
+      
+      <%= f.submit "注文を確定する", class: "btn btn-success btn-lg px-5" %>
+    <% end %>
   </div>
-</div>
-
-<div class="row style="margin-top: 30px;">
-  <div class="col-md-12">
-    <table class="table table-borderless">
-      <tr>
-        <th style="width: 15%;">支払方法</th>
-        <td>
-          <strong><%= @order.payment_method_i18n %></strong>
-          <span class="text-muted">（※後ほど日本語化（enum）の設定をすると「クレジットカード」等になります）</span>
-        </td>
-      </tr>
-      <tr>
-        <th>お届け先</th>
-        <td>
-          〒<%= @order.postal_code %> <%= @order.address %><br>
-          <%= @order.name %>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-
-<div class="text-center" style="margin-top: 40px;">
-  <%= button_to "注文を確定する", orders_path, method: :post, class: "btn btn-success btn-lg", data: { turbo: false } %>
 </div>
