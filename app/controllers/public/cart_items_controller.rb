@@ -4,16 +4,26 @@ class Public::CartItemsController < Public::ApplicationController
   end
 
   def create
-    @cart_item = Cart.new
-    @cart_item.customer_id = current_customer.id # IDの直接代入はOKです
-    @cart_item.item = Item.find(params[:cart][:item_id]) # ここでオブジェクトを渡す
-    @cart_item.amount = params[:cart][:amount].to_i
-    
-    if @cart_item.save
+    @existing_cart_item = Cart.find_by(customer_id: current_customer.id, item_id: params[:cart][:item_id])
+    if @existing_cart_item.present?
+      
+      add_amount = params[:cart][:amount].to_i
+      new_amount = @existing_cart_item.amount + add_amount
+      
+      @existing_cart_item.update(amount: new_amount)
       redirect_to cart_items_path
-    else
-      puts @cart_item.errors.full_messages # ここでエラー詳細が出ます
-      redirect_to item_path(params[:cart][:item_id])
+   else
+      @cart_item = Cart.new
+      @cart_item.customer_id = current_customer.id 
+      @cart_item.item = Item.find(params[:cart][:item_id]) 
+      @cart_item.amount = params[:cart][:amount].to_i
+      
+      if @cart_item.save
+        redirect_to cart_items_path
+      else
+        puts @cart_item.errors.full_messages 
+        redirect_to item_path(params[:cart][:item_id])
+      end
     end
   end
 
