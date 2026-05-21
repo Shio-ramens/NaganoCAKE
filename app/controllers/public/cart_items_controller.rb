@@ -3,34 +3,47 @@ class Public::CartItemsController < Public::ApplicationController
       @cart_items = CartItem.where(customer_id: current_customer.id).includes(:item)
   end
 
-  def create
-    @existing_cart_item = CartItem.find_by(customer_id: current_customer.id, item_id: params[:cart_item][:item_id])
+def create
 
-    if @existing_cart_item.present?
-      add_amount = params[:cart_item][:amount].to_i
-      new_amount = @existing_cart_item.amount + add_amount
-      @existing_cart_item.update(amount: new_amount)
+  item_id = params[:cart_item][:item_id]
+
+  add_amount = params[:cart_item][:amount].to_i
+
+  @existing_cart_item = current_customer.cart_items.find_by(item_id: item_id)
+
+  if @existing_cart_item.present?
+
+    new_amount = @existing_cart_item.amount + add_amount
+
+    new_amount = 99 if new_amount > 99
+
+    @existing_cart_item.update(amount: new_amount)
+    redirect_to cart_items_path
+  else
+    @cart_item = current_customer.cart_items.new(
+      item_id: item_id,
+      amount: add_amount
+    )
+    
+    if @cart_item.save
       redirect_to cart_items_path
     else
-      @cart_item = CartItem.new
-      @cart_item.customer_id = current_customer.id 
-      @cart_item.item_id = params[:cart_item][:item_id] 
-      @cart_item.amount = params[:cart_item][:amount].to_i
-      
-      if @cart_item.save
-        redirect_to cart_items_path
-      else
-        redirect_to item_path(params[:cart_item][:item_id])
-      end
+
+      flash[:alert] = "個数を選択してください"
+      redirect_to item_path(item_id)
     end
   end
+end
 
-  def update
-    cart = CartItem.find(params[:id])
-    cart.update(amount: params[:cart_item][:amount])
-
-    redirect_to cart_items_path
-  end
+def update
+  cart = current_customer.cart_items.find(params[:id])
+  # 変更後の値が10を超えていたら10に固定
+  amount = params[:cart_item][:amount].to_i
+  amount = 99 if amount > 99
+  
+  cart.update(amount: amount)
+  redirect_to cart_items_path
+end
 
   def destroy
     cart = CartItem.find(params[:id])

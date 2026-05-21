@@ -33,7 +33,7 @@
           <td><%= number_with_delimiter(cart.item.with_tax_price) %></td>
           <td>
             <%= form_with model: cart, url: cart_item_path(cart), method: :patch, class: "d-flex align-items-center" do |f| %>
-              <%= f.select :amount, *[1..10], {}, { class: "form-select form-select-sm me-2", style: "width: 70px;" } %>
+              <%= f.select :amount, *[1..99], {}, { class: "form-select form-select-sm me-2", style: "width: 70px;" } %>
               <%= f.submit "変更", class: "btn btn-success btn-sm" %>
             <% end %>
           </td>
