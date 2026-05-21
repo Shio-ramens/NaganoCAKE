@@ -29,9 +29,9 @@
                 </td>
                 
                 <td>
-                  <%= order.order_details.sum(:amount) %>
+                  <%= order.total_quantity %>
                 </td>
-                
+
                 <td>
                   <span class="badge badge-secondary p-2 text-dark">
                     <%= order.status_i18n %>

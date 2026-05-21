@@ -10,4 +10,8 @@ class Order < ApplicationRecord
     preparing_ship: 3,   # 発送準備中
     sent: 4              # 発送済み
   }
+
+  def total_quantity
+    order_details.sum(:amount)
+  end
 end

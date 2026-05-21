@@ -24,7 +24,25 @@
   </head>
 
   <body>
-    <%= render "layouts/header" %>
+    <% if request.path == '/admin/sign_in' %>
+      <%# 🌟 管理者ログイン画面の時は、強制的に「未ログイン時のメニュー」をここに直接表示する %>
+      <header class="shadow-sm">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center py-3">
+            <h1><%= link_to "ながのCAKE", root_path, class: "text-dark text-decoration-none" %></h1>
+            <div>
+              <%= link_to "About", about_path, class: "me-4 text-dark text-decoration-none d-inline-block border border-2 rounded p-2 fw-bold" %>
+              <%= link_to "商品一覧", items_path, class: "me-4 text-dark text-decoration-none d-inline-block border border-2 rounded p-2 fw-bold" %>
+              <%= link_to "新規登録", customers_sign_up_path, class: "me-4 text-dark text-decoration-none d-inline-block border border-2 rounded p-2 fw-bold" %>
+              <%= link_to "ログイン", customers_sign_in_path, class: "text-dark text-decoration-none d-inline-block border border-2 rounded p-2 fw-bold" %>
+            </div>
+          </div>
+        </div>
+      </header>
+    <% else %>
+     <%# 通常のページ（顧客側など）はこれまでの共通ヘッダーを読み込む %>
+     <%= render 'layouts/header' %>
+    <% end %>
 
     <main>
       <%= yield %>
