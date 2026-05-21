@@ -6,6 +6,6 @@ enum :making_status, {
     cannot_make: 0,
     waiting_make: 1,
     making: 2,
-    finished: 3
+    finish_make: 3
   }
 end

@@ -19,23 +19,21 @@
             <% @orders.each do |order| %>
               <tr>
                 <td>
-                  <%= link_to order.created_at.strftime('%Y/%m/%d %H:%M:%S'), "#", class: "text-primary font-weight-bold" %>
+                  <%= link_to order.created_at.strftime('%Y/%m/%d %H:%M:%S'), admin_order_path(order), class: "text-primary font-weight-bold" %>
                 </td>
                 
                 <td>
                   <% if order.customer %>
                     <%= order.customer.last_name %> <%= order.customer.first_name %>
-                  <% else %>
-                    <span class="text-muted">テスト 太郎（顧客データなし）</span>
                   <% end %>
                 </td>
                 
                 <td>
                   <%= order.total_quantity %>
                 </td>
-                
+
                 <td>
-                  <span class="badge badge-secondary p-2">
+                  <span class="badge badge-secondary p-2 text-dark">
                     <%= order.status_i18n %>
                   </span>
                 </td>
@@ -45,7 +43,7 @@
         </table>
 
       <div class="d-flex justify-content-center mt-4">
-        <%#= paginate @orders %>
+        <%= paginate @orders %>
       </div>
 
     </div>

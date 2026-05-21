@@ -10,4 +10,9 @@ ja:
           making: "製作中"
           preparing_ship: "発送準備中"
           sent: "発送済み"
-        
+      order_detail:
+        making_status:
+          cannot_make: "着手不可"
+          waiting_make: "製作待ち"
+          making: "製作中"
+          finish_make: "製作完了"
