@@ -27,7 +27,6 @@
         <% total += subtotal %>
         <tr>
           <td>
-            <%# 画像があれば表示、なければダミー画像 %>
             <%= image_tag cart.item.get_image(60, 40), class: "me-2 border" %>
             <span class="fw-bold"><%= cart.item.name %></span>
           </td>

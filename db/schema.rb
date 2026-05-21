@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_19_010833) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_21_031941) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -56,14 +56,14 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_19_010833) do
     t.index ["email"], name: "index_admins_on_email", unique: true
   end
 
-  create_table "carts", force: :cascade do |t|
+  create_table "cart_items", force: :cascade do |t|
     t.integer "item_id", null: false
     t.integer "customer_id", null: false
     t.integer "amount", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_carts_on_customer_id"
-    t.index ["item_id"], name: "index_carts_on_item_id"
+    t.index ["customer_id"], name: "index_cart_items_on_customer_id"
+    t.index ["item_id"], name: "index_cart_items_on_item_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -99,6 +99,16 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_19_010833) do
     t.index ["genre_id"], name: "index_items_on_genre_id"
   end
 
+  create_table "order_details", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.integer "item_id", null: false
+    t.integer "price", null: false
+    t.integer "amount", null: false
+    t.integer "making_status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "orders", force: :cascade do |t|
     t.integer "customer_id"
     t.string "postal_code"
@@ -109,6 +119,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_19_010833) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "shipping_cost"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -136,8 +147,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_19_010833) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "carts", "customers"
-  add_foreign_key "carts", "items"
+  add_foreign_key "cart_items", "customers"
+  add_foreign_key "cart_items", "items"
   add_foreign_key "items", "genres"
   add_foreign_key "sessions", "admins"
   add_foreign_key "sessions", "customers"

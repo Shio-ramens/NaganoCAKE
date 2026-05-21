@@ -6,36 +6,55 @@ class Public::OrdersController < Public::ApplicationController
   end
 
   def confirm
-    @order = Order.new
-    @order.payment_method = order_params[:payment_method]
+  @select_address = params[:order][:select_address]
+  
+  @order = Order.new(order_params.except(:select_address))
+
+  if @select_address == "0"
+    @order.postal_code = current_customer.postal_code
+    @order.address     = current_customer.address
+    @order.name        = current_customer.last_name + current_customer.first_name
     
-    # 2. ラジオボタンでどれが選ばれたかによって、@order に入れる住所を分岐させる準備
-    #（※ここの中身は次回以降じっくり作るので、まずはエラーを消すためにガワだけ書きます）
-    case params[:order][:select_address]
-    when "0"
-      # 👇 今はログインしていないので、ダミーの情報を直書きします
-      @order.postal_code = "150-0041"
-      @order.address     = "東京都渋谷区神南1丁目19-11 パークウェースクエア2 4階"
-      @order.name        = "山田 花子"
-    when "1"
-      # 👇 本来は登録済みの住所から探しますが、今はダミーを入れます
-      @order.postal_code = "000-0000"
-      @order.address     = "登録済みのダミー住所"
-      @order.name        = "テスト 太郎"
-    when "2"
-      # ⭕ 新しいお届け先（これは今も今後もこのままでOK！）
-      @order.postal_code = order_params[:postal_code]
-      @order.address     = order_params[:address]
-      @order.name        = order_params[:name]
+  elsif @select_address == "1"
+    @address = current_customer.addresses.find(params[:order][:address_id])
+    @order.postal_code = @address.postal_code
+    @order.address     = @address.address
+    @order.name        = @address.name
+    
+  elsif @select_address == "2"
+    @order.postal_code = params[:order][:postal_code]
+    @order.address     = params[:order][:address]
+    @order.name        = params[:order][:name]
+  end
+
+    @cart_items = current_customer.cart_items
+    @total = 0
+    @cart_items.each do |cart_item|
+      @total += cart_item.item.with_tax_price * cart_item.amount
     end
 
-    @cart_item = []
-
-    
   end
 
   def create
-    redirect_to thanks_orders_path
+    @order = current_customer.orders.new(order_params)
+    @order.shipping_cost = 800
+    @order.status = 0
+  
+    if @order.save
+      current_customer.cart_items.each do |cart_item|
+        OrderDetail.create!(
+          order_id: @order.id,
+          item_id: cart_item.item_id,
+          price: cart_item.item.with_tax_price, 
+          amount: cart_item.amount,
+          making_status: 0 
+        )
+      end
+      current_customer.cart_items.destroy_all
+      redirect_to thanks_orders_path
+    else
+      render :new
+    end
   end
 
   def thanks
@@ -43,22 +62,18 @@ class Public::OrdersController < Public::ApplicationController
   end
 
   def index
-    @orders = []
+    @orders = current_customer.orders.order(created_at: :desc)
   end
 
   def show
-    @order = Order.new(
-      postal_code: "150-0041",
-    address: "東京都渋谷区神南1丁目19-11 パークウェースクエア2 4階",
-    name: "山田花子",
-    payment_method: "transfer" 
-    )
+    @order = current_customer.orders.find(params[:id])
+    @order_details = @order.order_details.includes(:item)
   end
 
   private
 
   def order_params
-   params.require(:order).permit(:payment_method, :select_address, :postal_code, :address, :name)
+    params.require(:order).permit(:payment_method, :postal_code, :address, :name, :total_payment, :shipping_cost)
   end
 
 end
