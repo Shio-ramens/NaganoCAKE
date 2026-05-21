@@ -15,6 +15,10 @@ class Admin::OrdersController < Admin::ApplicationController
     end
   end
 
+  def index
+    @customer = Customer.find(params[:customer_id])
+    @orders = @customer.orders.page(params[:page]).per(10).order(created_at: :desc)
+  end
   private
 
   def order_params
