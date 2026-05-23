@@ -1,10 +1,85 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+* {
+  font-family: 'Zen Maru Gothic', sans-serif !important;
+}
+
+body {
+  background-color: #fffaf5;
+  font-family: 'Zen Maru Gothic', sans-serif;
+}
+
+.navbar {
+  background-color: white;
+  letter-spacing: 0.05em;
+}
+
+.nav-link {
+  font-weight: 500;
+}
+
+.btn {
+  transition: 0.2s;
+  border-radius: 999px;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: 700;
+}
+
+.item-card {
+  border-radius: 18px;
+  overflow: hidden;
+  transition: 0.25s;
+}
+
+.item-card:hover {
+  transform: translateY(-4px);
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.main-visual {
+  height: 450px;
+
+  background-image: url("main_visual.png");
+
+  background-size: cover;
+  background-position: center;
+
+  border-radius: 24px;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.main-visual::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+
+}
+
+.cart-table {
+  background-color: white;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.section-title {
+  background: #f8f5f2;
+
+  color: #5c4033;
+
+  font-weight: 700;
+}
